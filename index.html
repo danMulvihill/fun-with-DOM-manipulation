@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>To Do List</title>
+</head>
+<body>
+    <h1>To Do Lists</h1>
+
+    <h2>Vanilla JavaScript (orthodox approach)</h2>
+    <input type="text" id="input1">
+    <button id="button1">Add todo</button>
+    <ul id ="output1"></ul>
+    <code><pre>
+            const input1 = document.querySelector('#input1');
+
+            document.querySelector('#button1').addEventListener('click', () =>{
+                
+                if (input1.value.trim()=='') return false;
+                var todoLi = document.createElement('li')
+                document.querySelector('#output1').appendChild(todoLi)
+                todoLi.textContent = input1.value;
+                todoLi.addEventListener('click', removeTodo)
+                input1.value = ''
+            })
+        
+            const removeTodo = e =>{
+                e.target.parentNode.removeChild(e.target)
+            }
+        
+    </pre>        
+    </code>
+
+
+    <script>
+        
+    const input1 = document.querySelector('#input1');
+
+    document.querySelector('#button1').addEventListener('click', () =>{
+        
+        if (input1.value.trim()=='') return false;
+        var todoLi = document.createElement('li')
+        document.querySelector('#output1').appendChild(todoLi)
+        todoLi.textContent = input1.value;
+        todoLi.addEventListener('click', removeTodo)
+        input1.value = ''
+    })
+
+    const removeTodo = e =>{
+        e.target.parentNode.removeChild(e.target)
+    }
+
+    
+    </script>
+
+
+    <h2>Vanilla JavaScript (more eloquent solution)</h2>
+    <p>This solution requires an event attribute on the button pointing to the AddTodo function.
+        You could alse use an event listener instead.
+    </p>
+    <input type="text" id="input">
+    <button onclick=addTodo()>Add todo</button>
+    <ul id ="output"></ul>
+    <code><pre>
+
+            const addTodo = () =>{
+                let input = document.querySelector('#input');
+                if(input.value.trim() == '') return false;
+                let li = document.querySelector("#output").appendChild(document.createElement('li'));
+                li.textContent = input.value;
+                li.addEventListener('click', (e)=>e.target.parentNode.removeChild(e.target));
+                input.value = '';
+            }
+            
+            
+    </pre>        
+    </code>
+
+
+    <script>
+        
+    const addTodo = () =>{
+        let input = document.querySelector('#input');
+        if(input.value.trim() == '') return false;
+        let li = document.querySelector("#output").appendChild(document.createElement('li'));
+        li.textContent = input.value;
+        li.addEventListener('click', (e)=>e.target.parentNode.removeChild(e.target));
+        input.value = '';
+    }
+    
+    </script>
+
+    <h2>Vanilla JavaScript - Unique Identifier</h2>
+    <p>The two solutions above place a string in the li items. A better solution would 
+        place todo items in an array of objects with the string and a unique identifier.)
+    </p>
+
+    <input type="text" id="input2">
+    <button id="button2">Add todo</button>
+    <ul id ="output2"></ul>
+    <code><pre>
+
+            document.querySelector('#button1').addEventListener('click', () =>{
+    
+                if (input1.value.trim()=='') return false;
+        
+                var newTodo = { id: Math.random(), value: input1.value }
+                todos.push(newTodo)
+                var todoLi = document.createElement('li')
+                document.querySelector('#output1').appendChild(todoLi)
+                todoLi.textContent = input1.value+" | "+newTodo.id;
+                todoLi.addEventListener('click', removeTodo)
+                todoLi.dataset.id = newTodo.id
+                input1.value = ''
+            })
+        
+            const removeTodo = e =>{
+        
+                var itemId = event.target.dataset.id;
+                for (var i=0;i&lt;todos.length; i++){
+                    if (todo[i].id == itemId){
+                        todo.splice(i, 1);
+                        break;
+                    }
+                }
+        
+                e.target.parentNode.removeChild(e.target)
+            }
+            
+    </pre>        
+    </code>
+    <script>
+    
+    const input2 = document.querySelector('#input2');
+    const todos = []
+
+    document.querySelector('#button2').addEventListener('click', () =>{
+    
+        if (input2.value.trim()=='') return false;
+
+        var newTodo = { id: Math.random(), value: input2.value }
+        todos.push(newTodo);
+        var todoLi = document.createElement('li')
+        document.querySelector('#output2').appendChild(todoLi)
+        todoLi.textContent = input2.value+" | "+newTodo.id;
+        todoLi.addEventListener('click', removeTodo2)
+        todoLi.dataset.id = newTodo.id
+        input2.value = ''
+    })
+
+    const removeTodo2 = e =>{
+
+        var itemId = event.target.dataset.id;
+        for (var i=0;i<todos.length; i++){
+            if (todos[i].id == itemId){
+                todos.splice(i, 1);
+                break;
+            }
+        }
+
+        e.target.parentNode.removeChild(e.target)
+    }
+
+    </script>
+
+<h2>jQuery</h2>
+<p>JQuery is a JavaScript library that provides shortcuts for manipulating the DOM
+</p>
+
+<input type="text" id="inputJ">
+<button id="buttonJ">Add todo</button>
+<ul id ="outputJ"></ul>
+<code><pre>
+
+
+        
+</pre>        
+</code>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+const inputJ = $('#inputJ');
+const todosJ = []
+$(document).ready(()=>{
+    $('#buttonJ').on('click', () =>{
+
+    if (inputJ.val().trim()=='') return false;
+
+    var newTodo = { id: Math.random(), value: inputJ.val() }
+    console.log(newTodo)
+    todosJ.push(newTodo)
+    $('<li>'+newTodo.value+" | "+newTodo.id+" </li>")
+    .appendTo($('#outputJ'))
+    .attr('dataset-id', newTodo.id)
+    .on('click', removeTodo)
+    
+    })
+
+    const removeTodoJ = e =>{
+
+    //var itemId = event.target.dataset.id;
+    for (var i=0;i<todosJ.length; i++){
+        if (todos[i].id == $(this).attr('dataset-id')){
+            todos.splice(i, 1);
+            break;
+        }
+    }
+
+    $(this).remove();
+    }
+
+}) // end document.ready
+
+</script>
+
+
+<h2>Vue</h2>
+
+<h2>Angular</h2>
+
+<h2>React</h2>
+
+
+</body>
+</html>
