@@ -173,7 +173,33 @@
 <button id="buttonJ">Add todo</button>
 <ul id ="outputJ"></ul>
 <code><pre>
-
+        const inputJ = $('#inputJ');
+        const todosJ = []
+        
+        $('#buttonJ').on('click', () =>{
+    
+            if (inputJ.val().trim()=='') return false;
+            var newTodo = { id: Math.random(), value: inputJ.val() }
+            todosJ.push(newTodo)
+            $('&lt;li&gt;'+newTodo.value+" | "+newTodo.id+" &lt;/li&gt;")
+            .appendTo($('#outputJ'))
+            .attr('dataset-id', newTodo.id)
+            .on('click', removeTodo)
+        
+        })
+    
+        const removeTodoJ = e =>{
+    
+        for (var i=0;i&lt;todosJ.length; i++){
+            if (todos[i].id == $(this).attr('dataset-id')){
+                todos.splice(i, 1);
+                break;
+            }
+        }
+    
+        $(this).remove();
+        }
+    
 
         
 </pre>        
@@ -200,7 +226,6 @@ $(document).ready(()=>{
 
     const removeTodoJ = e =>{
 
-    //var itemId = event.target.dataset.id;
     for (var i=0;i<todosJ.length; i++){
         if (todos[i].id == $(this).attr('dataset-id')){
             todos.splice(i, 1);
