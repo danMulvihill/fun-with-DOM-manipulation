@@ -94,7 +94,8 @@
 
     <h2>Vanilla JavaScript - Unique Identifier</h2>
     <p>The two solutions above place a string in the li items. A better solution would 
-        place todo items in an array of objects with the string and a unique identifier.)
+        place todo items in an array of objects with the string and a unique identifier.
+        Use can use Math.random() or the Date object to create a unique, but this example uses the _.uniqueId() function in the lodash utility library.
     </p>
 
     <input type="text" id="input2">
@@ -106,7 +107,7 @@
     
                 if (input1.value.trim()=='') return false;
         
-                var newTodo = { id: Math.random(), value: input1.value }
+                var newTodo = { id: _.uniqueId(), value: input1.value }
                 todos.push(newTodo)
                 var todoLi = document.createElement('li')
                 document.querySelector('#output1').appendChild(todoLi)
@@ -131,6 +132,8 @@
             
     </pre>        
     </code>
+
+    <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.core.min.js"></script>
     <script>
     
     const input2 = document.querySelector('#input2');
@@ -140,7 +143,7 @@
     
         if (input2.value.trim()=='') return false;
 
-        var newTodo = { id: Math.random(), value: input2.value }
+        var newTodo = { id: _.uniqueId(), value: input2.value }
         todos.push(newTodo);
         var todoLi = document.createElement('li')
         document.querySelector('#output2').appendChild(todoLi)
@@ -179,7 +182,7 @@
         $('#buttonJ').on('click', () =>{
     
             if ($(inputJ).val().trim()=='') return false;
-            var newTodo = { id: Math.random(), value: $(inputJ).val() }
+            var newTodo = { id: _.uniqueId(), value: $(inputJ).val() }
             todosJ.push(newTodo)
             $('&lt;li&gt;'+newTodo.value+" | "+newTodo.id+" &lt;/li&gt;")
             .appendTo($('#outputJ'))
@@ -214,7 +217,7 @@ $(document).ready(()=>{
 
     if ($(inputJ).val().trim()=='') return false;
 
-    var newTodo = { id: Math.random(), value: $(inputJ).val() }
+    var newTodo = { id: _.uniqueId(), value: $(inputJ).val() }
     console.log(newTodo)
     todosJ.push(newTodo)
     $('<li>'+newTodo.value+" | "+newTodo.id+" </li>")
@@ -245,7 +248,7 @@ $(document).ready(()=>{
 
 <script src="https://unpkg.com/vue">
 </script>
-<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.core.min.js"></script>
+
 
 <div id="app">
   <input type="text" v-model="userInput">
@@ -254,7 +257,8 @@ $(document).ready(()=>{
   <ul>
     <li 
       v-for="todo in todos"
-      v-on:click="removeTodo(todo)">{{ todo.value }}</li>
+      v-on:click="removeTodo(todo)">{{ todo.value}} | {{todo.id }}
+    </li>
   </ul>
 </div>
 
@@ -272,10 +276,11 @@ $(document).ready(()=>{
       }
       var newTodo = {
         id: _.uniqueId(),
-        value: this.userInput
+        value: this.userInput,
+        randomId : Math.random()
       };
       this.todos.push(newTodo);
-      console.log(this.todos);
+      console.log(this.todos.value);
     },
     removeTodo(todo) {
       var id = todo.id;
